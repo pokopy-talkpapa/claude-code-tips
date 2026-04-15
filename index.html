@@ -118,14 +118,19 @@
       margin-top: 20px;
       font-size: 15px;
       color: #333;
+    }
+
+    .body-text {
       white-space: pre-wrap;
     }
 
     .entry-image {
       width: 100%;
       border-radius: 8px;
-      margin-top: 20px;
+      margin-top: 16px;
+      margin-bottom: 4px;
       border: 1px solid #eee;
+      display: block;
     }
 
     .prompt-box {
@@ -197,9 +202,18 @@
           const tags = (entry.tags || [])
             .map(t => `<span class="tag">#${esc(t)}</span>`)
             .join('');
-          const imgs = (entry.images || (entry.image ? [entry.image] : []))
-            .map(src => `<img class="entry-image" src="${esc(src)}" alt="${esc(entry.title)}">`)
-            .join('');
+          // [IMAGES:path1,path2] マーカーをテキストと画像に分割してレンダリング
+          function renderBody(text, title) {
+            return text.split(/(\[IMAGES:[^\]]+\])/).map(part => {
+              const m = part.match(/^\[IMAGES:([^\]]+)\]$/);
+              if (m) {
+                return m[1].split(',').map(src =>
+                  `<img class="entry-image" src="${esc(src.trim())}" alt="${esc(title)}">`
+                ).join('');
+              }
+              return `<span class="body-text">${esc(part)}</span>`;
+            }).join('');
+          }
 
           const prompt = entry.prompt
             ? `<div class="prompt-box">
@@ -223,7 +237,7 @@
             <div class="entry-summary">${esc(entry.summary)}</div>
             <button class="toggle-btn" onclick="toggle(this)">続きを読む ▼</button>
             <div class="entry-body">
-              <div class="entry-body-inner">${esc(entry.body)}${imgs}</div>
+              <div class="entry-body-inner">${renderBody(entry.body, entry.title)}</div>
               ${prompt}
             </div>
           `;
