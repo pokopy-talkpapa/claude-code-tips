@@ -7,9 +7,17 @@
       "title": "Claude Codeが終わったらDiscordに通知する",
       "summary": "作業を頼んだまま別のことしてたら、終わったよって知らせてくれた✨",
       "tags": ["Discord", "自動化", "通知"],
-      "body": "Claude Codeに長い作業を頼んだとき、終わるまで画面を見続けるの、地味につらくないですか😭\n\nDiscordに自動通知を設定してからは、「終わったかな？」ってソワソワしながら待つのがなくなりました✨\n\n仕組みはシンプルで、DiscordのWebhook URLを取得してClaude Codeの設定に書くだけ。5分もあれば完了します😁\n\n作業を頼んで別のことしてたら「完了しました🔔」って届く感覚、マジで最高です。とくに長い処理を頼むことが多い人にはかなりおすすめです👏",
+      "body": "Claude Codeに長い作業を頼んだとき、終わるまで画面を見続けるの、地味につらくないですか😭\n\nDiscordに自動通知を設定してからは、「終わったかな？」ってソワソワしながら待つのがなくなりました✨\n\n5分でできるので、まだ設定してない人はぜひやってみてください！\n\n---\n\n【まず前提：自分のDiscordサーバーが必要です】\n\nｉサークルなど他の人のサーバーではWebhookを設定する権限がないので、自分のサーバーが必要です。\nまだない人はまずここから！\n\n【Step 0】自分のDiscordサーバーを作る（持っている人はスキップ）\n\n① Discordの左側にある「＋」ボタンをクリック\n② 「オリジナルの作成」を選ぶ\n③ 「自分と友達のため」を選ぶ\n④ サーバー名を入力して「新規作成」\n\nこれだけで完成です！\n\n---\n\n【Step 1】通知用チャンネルでWebhook URLを取得する\n\n① 通知を受け取りたいチャンネルを右クリック →「チャンネルを編集」\n② 「連携サービス」→「ウェブフック」を選ぶ\n③ 「新しいウェブフック」をクリック\n④ 名前をつけて「ウェブフックURLをコピー」を押す\n\nこれでURLが手に入ります！\n\n---\n\n【Step 2】~/.claude/settings.json に設定を追加する\n\nClaude Code自身に頼んでもOKです。\n以下のhooksセクションを追加してください：\n\n{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"matcher\": \"\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"curl -s -X POST -H 'Content-Type: application/json' -d '{\\\"content\\\":\\\"✅ 作業が完了しました！\\\"}' ここにStep1のURLを貼る\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\n---\n\n【Step 3】Claude Codeに何か作業を頼んでみる\n\n完了したら Discord に「✅ 作業が完了しました！」と届きます🔔\n\n作業を頼んで別のことしてたら通知が届く感覚、マジで最高です👏\nとくに長い処理を頼むことが多い人には、かなりおすすめです😁",
       "prompt": "Claude Codeの作業完了時に、DiscordのWebhookで自動通知してほしい。セットアップ方法を教えて。",
-      "image": ""
+      "images": [
+        "images/discord-step0-1.png",
+        "images/discord-step0-2.png",
+        "images/discord-step0-3.png",
+        "images/discord-step0-4.png",
+        "images/discord-step1-1.png",
+        "images/discord-step1-2.png",
+        "images/discord-step1-3.png"
+      ]
     }
   ]
 }

@@ -197,9 +197,9 @@
           const tags = (entry.tags || [])
             .map(t => `<span class="tag">#${esc(t)}</span>`)
             .join('');
-          const img = entry.image
-            ? `<img class="entry-image" src="${esc(entry.image)}" alt="${esc(entry.title)}">`
-            : '';
+          const imgs = (entry.images || (entry.image ? [entry.image] : []))
+            .map(src => `<img class="entry-image" src="${esc(src)}" alt="${esc(entry.title)}">`)
+            .join('');
 
           const prompt = entry.prompt
             ? `<div class="prompt-box">
@@ -223,7 +223,7 @@
             <div class="entry-summary">${esc(entry.summary)}</div>
             <button class="toggle-btn" onclick="toggle(this)">続きを読む ▼</button>
             <div class="entry-body">
-              <div class="entry-body-inner">${esc(entry.body)}${img}</div>
+              <div class="entry-body-inner">${esc(entry.body)}${imgs}</div>
               ${prompt}
             </div>
           `;
