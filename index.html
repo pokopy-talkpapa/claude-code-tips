@@ -122,6 +122,21 @@
 
     .body-text {
       white-space: pre-wrap;
+      display: block;
+    }
+
+    .step-heading {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1a1a;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .body-divider {
+      border: none;
+      border-top: 1px solid #ebebeb;
+      margin: 20px 0;
     }
 
     .entry-image {
@@ -211,7 +226,17 @@
                   `<img class="entry-image" src="${esc(src.trim())}" alt="${esc(title)}">`
                 ).join('');
               }
-              return `<span class="body-text">${esc(part)}</span>`;
+              // 行ごとに処理（太字・見出し・区切り線）
+              const lines = part.split('\n').map(line => {
+                if (line.trim() === '---') return '<hr class="body-divider">';
+                let escaped = esc(line);
+                escaped = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                if (/^【/.test(line.trim())) {
+                  return `<span class="step-heading">${escaped}</span>`;
+                }
+                return escaped;
+              });
+              return `<span class="body-text">${lines.join('\n')}</span>`;
             }).join('');
           }
 
