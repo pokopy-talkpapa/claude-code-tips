@@ -190,40 +190,31 @@
     .copy-btn:hover { background: #444; }
     .copy-btn.copied { background: #4caf50; }
 
-    .toc {
-      max-width: 680px;
-      margin: 0 auto 40px;
-      border-top: 1px solid #ebebeb;
-      padding-top: 24px;
+    .inline-toc {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .toc-title {
+    .inline-toc-label {
       font-size: 12px;
       color: #bbb;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
-    .toc-list {
-      list-style: none;
-    }
-
-    .toc-item a {
+    .inline-toc-link {
       font-size: 14px;
-      color: #888;
+      color: #555;
       text-decoration: none;
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      padding: 5px 0;
-      border-bottom: none;
+      padding: 3px 0;
       transition: color 0.15s;
     }
 
-    .toc-item a:hover { color: #1a1a1a; }
-
-    .toc-item-emoji { font-size: 16px; flex-shrink: 0; }
+    .inline-toc-link:hover { color: #1a1a1a; }
 
     @media (max-width: 480px) {
       .site-header { margin: 36px auto 32px; }
@@ -237,7 +228,6 @@
     <h1 class="site-title">🤖 Claude Code でやってみた</h1>
     <p class="site-subtitle">by ぽこぴぃ</p>
   </header>
-  <nav class="toc" id="toc"></nav>
   <main class="entries" id="entries"></main>
 
   <script>
@@ -252,45 +242,54 @@
     fetch('data.json')
       .then(r => r.json())
       .then(data => {
-        // 目次を生成
-        const toc = document.getElementById('toc');
-        const tocList = document.createElement('ul');
-        tocList.className = 'toc-list';
-        data.entries.forEach(entry => {
-          const li = document.createElement('li');
-          li.className = 'toc-item';
-          li.innerHTML = `<a href="#${esc(entry.id)}"><span class="toc-item-emoji">${esc(entry.emoji)}</span><span>${esc(entry.title)}</span></a>`;
-          tocList.appendChild(li);
-        });
-        toc.innerHTML = '<div class="toc-title">もくじ</div>';
-        toc.appendChild(tocList);
-
         const container = document.getElementById('entries');
         data.entries.forEach(entry => {
           const tags = (entry.tags || [])
             .map(t => `<span class="tag">#${esc(t)}</span>`)
             .join('');
-          // [IMAGES:path1,path2] マーカーをテキストと画像に分割してレンダリング
-          function renderBody(text, title) {
-            return text.split(/(\[IMAGES:[^\]]+\])/).map(part => {
+
+          // [IMAGES:] マーカー処理・太字・区切り線・ステップ見出し＋記事内目次を生成
+          function renderBody(text, title, entryId) {
+            // 【...】見出しを事前に検出してslugを割り当て
+            const headings = [];
+            text.split('\n').forEach(line => {
+              if (/^【/.test(line.trim())) {
+                headings.push({ label: line.trim(), slug: `${entryId}-h${headings.length}` });
+              }
+            });
+
+            // 記事内目次を生成
+            let tocHtml = '';
+            if (headings.length > 0) {
+              const links = headings.map(h =>
+                `<a class="inline-toc-link" href="#${esc(h.slug)}">${esc(h.label)}</a>`
+              ).join('');
+              tocHtml = `<div class="inline-toc"><div class="inline-toc-label">このページの内容</div>${links}</div>`;
+            }
+
+            // 本文レンダリング（見出しにアンカーIDを付与）
+            let hi = 0;
+            const bodyHtml = text.split(/(\[IMAGES:[^\]]+\])/).map(part => {
               const m = part.match(/^\[IMAGES:([^\]]+)\]$/);
               if (m) {
                 return m[1].split(',').map(src =>
                   `<img class="entry-image" src="${esc(src.trim())}" alt="${esc(title)}">`
                 ).join('');
               }
-              // 行ごとに処理（太字・見出し・区切り線）
               const lines = part.split('\n').map(line => {
                 if (line.trim() === '---') return '<hr class="body-divider">';
                 let escaped = esc(line);
                 escaped = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-                if (/^【/.test(line.trim())) {
-                  return `<span class="step-heading">${escaped}</span>`;
+                if (/^【/.test(line.trim()) && headings[hi]) {
+                  const slug = headings[hi++].slug;
+                  return `<span class="step-heading" id="${esc(slug)}">${escaped}</span>`;
                 }
                 return escaped;
               });
               return `<span class="body-text">${lines.join('\n')}</span>`;
             }).join('');
+
+            return tocHtml + bodyHtml;
           }
 
           const prompt = entry.prompt
@@ -316,7 +315,7 @@
             <div class="entry-summary">${esc(entry.summary)}</div>
             <button class="toggle-btn" onclick="toggle(this)">続きを読む ▼</button>
             <div class="entry-body">
-              <div class="entry-body-inner">${renderBody(entry.body, entry.title)}</div>
+              <div class="entry-body-inner">${renderBody(entry.body, entry.title, entry.id)}</div>
               ${prompt}
             </div>
           `;
