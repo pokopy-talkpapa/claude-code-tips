@@ -322,6 +322,14 @@
           `;
           container.appendChild(el);
         });
+
+        // URLにハッシュがあれば該当記事へスクロール
+        if (window.location.hash) {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100);
+          }
+        }
       })
       .catch(() => {
         document.getElementById('entries').textContent = 'データを読み込めませんでした。';
