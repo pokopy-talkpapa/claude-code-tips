@@ -250,11 +250,12 @@
 
           // [IMAGES:] マーカー処理・太字・区切り線・ステップ見出し＋記事内目次を生成
           function renderBody(text, title, entryId) {
-            // 【...】見出しを事前に検出してslugを割り当て
+            // 【...】見出しを事前に検出してslugを割り当て（**【...】** 形式にも対応）
             const headings = [];
             text.split('\n').forEach(line => {
-              if (/^【/.test(line.trim())) {
-                headings.push({ label: line.trim(), slug: `${entryId}-h${headings.length}` });
+              if (/^(\*\*)?【/.test(line.trim())) {
+                const label = line.trim().replace(/^\*\*/, '').replace(/\*\*.*$/, '').trim();
+                headings.push({ label, slug: `${entryId}-h${headings.length}` });
               }
             });
 
@@ -280,7 +281,7 @@
                 if (line.trim() === '---') return '<hr class="body-divider">';
                 let escaped = esc(line);
                 escaped = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-                if (/^【/.test(line.trim()) && headings[hi]) {
+                if (/^(\*\*)?【/.test(line.trim()) && headings[hi]) {
                   const slug = headings[hi++].slug;
                   return `<span class="step-heading" id="${esc(slug)}">${escaped}</span>`;
                 }
