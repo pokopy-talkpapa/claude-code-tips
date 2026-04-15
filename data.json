@@ -1,0 +1,14 @@
+{
+  "entries": [
+    {
+      "id": "2026-04-15-discord-notify",
+      "date": "2026-04-15",
+      "emoji": "🔔",
+      "title": "Claude Codeが終わったらDiscordに通知する",
+      "summary": "作業中に別のことをしていても、終わったら自動で知らせてくれる",
+      "tags": ["Discord", "自動化", "通知"],
+      "body": "Claude Codeに長い作業を頼んだとき、終わるまで画面を見続けるのは時間がもったいないですよね。\n\nDiscordのWebhook URLを設定しておくだけで、作業が完了した瞬間にDiscordへ自動でメッセージが届くようになります。\n\n自分のDiscordサーバーにチャンネルを作り、WebhookのURLを発行するのは5分もあれば完了。あとはClaude Codeの設定ファイルにそのURLを書くだけです。\n\nこれがあると、Claude Codeを走らせてから他の作業ができるようになるので、作業効率が大きく変わります。とくに長い処理を頼むことが多い人におすすめです。",
+      "image": ""
+    }
+  ]
+}
