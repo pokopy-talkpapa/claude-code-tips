@@ -351,8 +351,9 @@
           }
         }
       })
-      .catch(() => {
-        document.getElementById('entries').textContent = 'データを読み込めませんでした。';
+      .catch(err => {
+        const msg = 'データを読み込めませんでした。\nfetch先: ' + (window.location.origin + base + 'data.json') + '\nエラー: ' + (err && err.message ? err.message : String(err));
+        document.getElementById('entries').textContent = msg;
       });
 
     function toggle(btn) {
