@@ -1,12 +1,41 @@
 {
   "entries": [
     {
+      "id": "2026-04-17-amical-install",
+      "date": "2026-04-17",
+      "emoji": "🎙️",
+      "title": "無料AI音声入力「Amical」をMacに入れよう",
+      "summary": "しゃけさんのラジオで話題になった音声入力、無料でできるアプリがあります。キーを離したタイミングが「話し終わり」だから、途中で止まっても勝手に送信されない👌",
+      "tags": [
+        "音声入力",
+        "Amical",
+        "Mac",
+        "ツール紹介"
+      ],
+      "body": "しゃけさんのラジオで「音声入力を基本にしよう」という話が出ていたので、自分が実際に使っているアプリを紹介します。\n\nアプリの名前は「**Amical（アミカル）**」。完全無料・オープンソースです。\n\n---\n\n**【なぜ標準の音声入力じゃなくAmicalなの？】**\n\nClaude CodeやGeminiなどに内蔵されている音声入力には、ひとつ困ったクセがあります。\n\n**話の途中でちょっと間があくと、勝手に送信されてしまう**のです。\n\n考えながら話していると、その短い沈黙を「話し終わり」と判断されて、文章が途中のまま送信されてしまう…そういう経験、ありませんか？\n\nAmicalはそこが違います。**自分がキーを離したタイミングが「話し終わり」**です。途中で考え込んでも、話がいったん止まっても、キーを押している限りAmicalはちゃんと待ってくれます。自分のペースで話せるのが、とにかく使いやすい理由です。\n\n---\n\n**【実際の使ってる様子はこちら】**\n\n[YOUTUBE:rGQXid99m1w]\n\n---\n\n**【まず確認】自分のMacはどちらのタイプ？**\n\nAmicalのダウンロードファイルには2種類あります。まず自分のMacを確認しましょう。\n\n画面左上の🍎マーク →「**このMacについて**」をクリック\n[IMAGES:amical-install-chip-check.png]\n\n「チップ」の欄を見てください。\n- `Apple M1` / `M2` / `M3` などと書いてある → **Apple Silicon（arm64）版**\n- `Intel` と書いてある → **Intel（x64）版**\n\n---\n\n**【Step 1】GitHubからダウンロードする**\n\n以下のページにアクセスします。\n\n👉 https://github.com/amicalhq/amical/releases/latest\n\n「Assets」という一覧の中から、自分のMacに合ったDMGファイルをクリックするとダウンロードが始まります。\n- Apple Siliconの方 → `Amical-macos-arm64.dmg`\n- Intelの方 → `Amical-macos-x64.dmg`\n\n[IMAGES:amical-install-step1-assets.png]\n\n---\n\n**【Step 2】Applicationsフォルダに入れる**\n\nダウンロードされたDMGファイルをダブルクリックして開くと、アイコンを「Applications」フォルダにドラッグする画面が出てきます。そのままドラッグ＆ドロップするだけです。\n\n[IMAGES:amical-install-step2-dmg.png]\n\n---\n\n**【Step 3】⚠️ここだけ少し注意！起動時の警告を乗り越える**\n\nLaunchpadまたはApplicationsフォルダからAmicalを起動しようとすると、このような警告が出ることがあります。\n\n[IMAGES:amical-install-step3-warning.png]\n\n「開発元を確認できないため開けません」と表示されても、慌てないでください。App Store以外からダウンロードしたアプリを初めて起動するときは、macOSが必ずこの確認を行います。これはAmicalに問題があるわけではなく、Macの安全確認の仕組みです。\n\n以下の手順で解除できます。\n\n① 🍎マーク →「**システム設定**」を開く\n② 左のメニューから「**プライバシーとセキュリティ**」を選ぶ\n③ 画面を下にスクロールすると「Amicalは確認できない開発元…」という表示がある\n④「**このまま開く**」をクリック → パスワードを入力 →「**開く**」\n\n[IMAGES:amical-install-step3-allow.png]\n\nこれでAmicalが起動できるようになります。\n\n---\n\n**【Step 4】マイクの使用を許可する**\n\n初めて起動すると、マイクの使用許可を求めるダイアログが表示されます。「**許可**」を選んでください。ここで許可しないと音声入力が動きません。\n\n[IMAGES:amical-install-step4-mic.png]\n\n---\n\n**【Step 5】ショートカットを自分が使いやすいキーに変える**\n\nメニューバー（画面右上）にAmicalのアイコンが表示されているのでクリック →「**Settings**」→「**Shortcuts**」を開きます。\n\n[IMAGES:amical-install-step5-settings.png]\n\n**まず「録音モード」を選ぼう**\n\nAmicalには2つの録音モードがあります。\n\n| モード | 操作 | こんな人に向いている |\n|---|---|---|\n| **Push to Talk** | キーを押している間だけ録音 | 短い入力が多い・すぐ確認したい |\n| **Hands-free** | 1回押して開始、もう1回押して停止 | 長い文章を話したい・両手をふさぎたくない |\n\n迷ったら **Hands-free** がおすすめです。片手をずっと押さえていなくて済むので、長い文を話すときに特に楽です。\n\n**次にキーの組み合わせを変えよう**\n\nデフォルトのショートカットはキーを3つ同時に押す設定になっていて、少し使いにくいです。\n\nおすすめは **`Option（⌥）+ Space`**。普段あまり使わないキーの組み合わせで、片手で自然に押せます。\n\n変更方法は簡単で、設定のフィールドをクリックして希望のキーを押すだけで自動的に登録されます。\n\n[IMAGES:amical-install-step5-shortcut.png]\n\nもし外付けキーボードに普段使わないキーやFキーがあれば、そこに割り当てると格段に快適になります😊\n\n---\n\n**【使い方】たった2ステップ**\n\n① カーソルを文字を入力したい場所に置く\n② 設定したショートカットを押す（Hands-freeなら1回押してスタート、Push to Talkなら押しっぱなし）\n③ 話す\n④ 話し終わったらキーを離す（またはもう1回押す）\n\n→ しゃべった内容がそのまま入力されます🎉\n\nClaude Codeのチャット欄にカーソルを置いてからショートカットを押せば、タイピングなしで指示を送れます。ぜひ試してみてください！",
+      "prompt": "",
+      "images": [
+        "images/amical-install-chip-check.png",
+        "images/amical-install-step1-assets.png",
+        "images/amical-install-step2-dmg.png",
+        "images/amical-install-step3-warning.png",
+        "images/amical-install-step3-allow.png",
+        "images/amical-install-step4-mic.png",
+        "images/amical-install-step5-settings.png",
+        "images/amical-install-step5-shortcut.png"
+      ]
+    },
+    {
       "id": "2026-04-15-discord-notify",
       "date": "2026-04-15",
       "emoji": "🔔",
       "title": "Claude Codeが終わったらDiscordに通知する",
       "summary": "作業を頼んだまま別のことしてたら、終わったよって知らせてくれた✨",
-      "tags": ["Discord", "自動化", "通知"],
+      "tags": [
+        "Discord",
+        "自動化",
+        "通知"
+      ],
       "body": "Claude Codeに長い作業を頼んだとき、終わるまで画面を見続けるの、地味につらくないですか😭\n\nDiscordに自動通知を設定してからは、「終わったかな？」ってソワソワしながら待つのがなくなりました✨\n\n全部で4ステップ、5分あれば完了します。まだ設定してない人はぜひ！\n\n---\n\n**【前提】自分のDiscordサーバーが必要です**\n\nｉサークルなど他の人のサーバーではWebhookを設定する権限がないので、**自分が管理者のサーバー**が必要です。\nまだ持っていない人はStep 0から！すでに持っている人はStep 1へ。\n\n---\n\n**【Step 0】自分のDiscordサーバーを作る**（すでに持っている人はスキップ）\n\n① Discordの左サイドバーにある「**＋**」ボタンをクリック\n[IMAGES:images/discord-step0-1.png]\n② 「**オリジナルの作成**」を選ぶ\n[IMAGES:images/discord-step0-2.png]\n③ 「**自分と友達のため**」を選ぶ\n[IMAGES:images/discord-step0-3.png]\n④ 好きなサーバー名を入力して「**新規作成**」\n[IMAGES:images/discord-step0-4.png]\nこれでサーバーの完成です！\n\n---\n\n**【Step 1】通知を受け取るチャンネルでWebhook URLを取得する**\n\n① 通知を受け取りたいチャンネルを**右クリック**して「**チャンネルを編集**」\n[IMAGES:images/discord-step1-1.png]\n② 左メニューの「**連携サービス**」→「**ウェブフック**」を選ぶ\n[IMAGES:images/discord-step1-2.png]\n③ 「**新しいウェブフック**」をクリック → 名前をつけて → 「**ウェブフックURLをコピー**」を押す\n[IMAGES:images/discord-step1-3.png]\nコピーしたURLは次のステップで使います！\n\n---\n\n**【Step 2】Claude Codeの設定ファイルにURLを書き込む**\n\nClaude Code自身に次のように頼むのが一番楽です😁\n\n「settings.json の Stop フックに Discord の Webhook 通知を追加して。URL は（コピーしたURL）」\n\n自分で設定したい場合は、~/.claude/settings.json に以下を追加してください。\n「ここにStep1のURLを貼る」の部分をコピーしたURLに置き換えてください：\n\n{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"matcher\": \"\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"curl -s -X POST -H 'Content-Type: application/json' -d '{\\\"content\\\":\\\"✅ 作業が完了しました！\\\"}' ここにStep1のURLを貼る\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\n---\n\n**【Step 3】動作確認してみよう**\n\nClaude Codeに何か作業を頼んで、完了したらDiscordに通知が届くか確認！\n\n「✅ 作業が完了しました！」と届いたら成功です🔔\n\n作業を頼んで別のことしてたら通知が届く感覚、**マジで最高**です👏\nとくに長い処理を頼むことが多い人には、かなりおすすめです😁",
       "prompt": "Claude Codeの作業完了時に、DiscordのWebhookで自動通知してほしい。セットアップ方法を教えて。",
       "images": [
