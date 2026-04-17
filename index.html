@@ -345,17 +345,14 @@
 
         // URLにハッシュがあれば該当記事へスクロール
         if (window.location.hash) {
-          const target = document.querySelector(window.location.hash);
+          const target = document.getElementById(window.location.hash.slice(1));
           if (target) {
             setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100);
           }
         }
       })
-      .catch(err => {
-        const fetchUrl = window.location.origin + base + 'data.json';
-        const errMsg = err && err.message ? err.message : String(err);
-        document.getElementById('entries').innerHTML =
-          'データを読み込めませんでした。<br><small>fetch先: ' + fetchUrl + '</small><br><small>エラー: ' + errMsg + '</small>';
+      .catch(() => {
+        document.getElementById('entries').textContent = 'データを読み込めませんでした。';
       });
 
     function toggle(btn) {
