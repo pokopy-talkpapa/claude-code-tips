@@ -287,9 +287,10 @@
             const bodyHtml = text.split(/(\[IMAGES:[^\]]+\]|\[YOUTUBE:[^\]]+\])/).map(part => {
               const mImg = part.match(/^\[IMAGES:([^\]]+)\]$/);
               if (mImg) {
-                return mImg[1].split(',').map(src =>
-                  `<img class="entry-image" src="${esc(src.trim())}" alt="${esc(title)}">`
-                ).join('');
+                return mImg[1].split(',').map(src => {
+                  const absrc = window.location.origin + base + src.trim();
+                  return `<img class="entry-image" src="${esc(absrc)}" alt="${esc(title)}">`;
+                }).join('');
               }
               const mYt = part.match(/^\[YOUTUBE:([^\]]+)\]$/);
               if (mYt) {
