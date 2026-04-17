@@ -252,7 +252,8 @@
         .replace(/"/g, '&quot;');
     }
 
-    fetch('data.json')
+    const base = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+    fetch(base + 'data.json')
       .then(r => r.json())
       .then(data => {
         const container = document.getElementById('entries');
