@@ -349,8 +349,8 @@
           }
         }
       })
-      .catch(() => {
-        document.getElementById('entries').textContent = 'データを読み込めませんでした。';
+      .catch(err => {
+        document.getElementById('entries').textContent = 'データを読み込めませんでした。エラー: ' + (err && err.message ? err.message : String(err));
       });
 
     function toggle(btn) {
