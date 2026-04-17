@@ -352,8 +352,10 @@
         }
       })
       .catch(err => {
-        const msg = 'データを読み込めませんでした。\nfetch先: ' + (window.location.origin + base + 'data.json') + '\nエラー: ' + (err && err.message ? err.message : String(err));
-        document.getElementById('entries').textContent = msg;
+        const fetchUrl = window.location.origin + base + 'data.json';
+        const errMsg = err && err.message ? err.message : String(err);
+        document.getElementById('entries').innerHTML =
+          'データを読み込めませんでした。<br><small>fetch先: ' + fetchUrl + '</small><br><small>エラー: ' + errMsg + '</small>';
       });
 
     function toggle(btn) {
